@@ -25,3 +25,113 @@
   aspect-ratio: 4 / 3;
   object-fit: cover;
 }
+
+.card-numeric .cards-card-image img {
+  height: 75px;
+  width: 75px;
+}
+
+.card-numeric .cards > ul > li {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    padding: 30px 0;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+}
+
+.card-numeric .cards > ul > li::before {
+    content: "";
+    position: absolute;
+    background: #ea1d22;
+    transition: 0.5s;
+    height: 3px;
+    bottom: 0;
+    left: 0;
+    width: 0;
+}
+.card-numeric .cards > ul > li:hover::before {
+    width: 100%;
+}
+
+.card-numeric .cards-card-body p:first-of-type {
+    position: absolute;
+    top: 0;
+    right: 20px;
+    font-size: 50px;
+    transform: translate(0%, -50%);
+      color: #dadada;
+      transition: 0.5s;
+}
+
+.card-numeric .cards > ul > li:hover .cards-card-body p:first-of-type {
+    color: #ea1d22;
+}
+
+.cards-text .cards.block > ul {
+  grid-template-columns: auto;
+    grid-auto-flow: column;
+    justify-content: center;
+}
+.cards-text .cards.block > ul > li {
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+}
+.cards-text .cards-card-body ul {
+  list-style-type: disclosure-closed;
+  padding-left: 20px;
+}
+
+.cards-text .cards-card-body ul + .button-wrapper a {
+  background-color: transparent;
+  color: black;
+  border: 1px solid black;
+}
+
+.cards-text .cards-card-body ul + .button-wrapper a:hover {
+  background-color: black;
+  color: white;
+}
+
+.cards-text-wrapper .cards > ul,
+.cards-details .cards > ul,
+.cards-gallery .cards > ul {
+  grid-template-columns: repeat(3, minmax(257px, 1fr));
+}
+
+.cards-text-wrapper .cards > ul > li {
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.cards-details .cards .cards-card-image {
+    position: relative;
+}
+
+.cards-details .cards .cards-card-image::before {
+    content: "";
+    position: absolute;
+    background: rgba(0, 0, 0, 0.5);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: scale(0);
+    transition: transform 0.5s;
+}
+
+.cards-details .cards > ul > li:hover .cards-card-image::before {
+    transform: scale(1);
+}
+
+.cards-details .cards > ul > li {
+  box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+.cards-gallery .default-content-wrapper,
+.cards-text .default-content-wrapper,
+.cards-details .default-content-wrapper {
+  text-align: center;
+}
