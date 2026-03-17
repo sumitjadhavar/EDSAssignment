@@ -11,8 +11,7 @@
 
 .hero h1 {
   max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
+  margin:auto;
   color: var(--background-color);
 }
 
@@ -34,56 +33,4 @@
   .hero {
     padding: 40px 32px;
   }
-}
-
-.hero-with-cta {
-  position: relative;
-}
-
-.hero-with-cta .hero.block {
-    background-image: url(https://themeloto.com/wps/gradi/wp-content/uploads/2024/11/gradi-slider.jpg);
-    background-position: center center;
-    background-size: cover;
-    padding: 0;
-    position: relative;
-    z-index: 1;
-}
-
-.hero-with-cta .hero.block::before {
-  background-color: rgba(0,0,0,0.73);
-  transition: .3s;
-  z-index: -1;
-  display: block;
-  height: 100%;
-  content: "";
-  position: absolute;
-  width: 100%;
-}
-
-.hero-with-cta h2,
-.hero-with-cta * {
-  color: white;
-  text-align: center;
-}
-.hero-with-cta a {
-  background-color: #ea1d22;
-  cursor: pointer;
-  color: white;
-  text-decoration: none;
-  padding: 8px 12px;
-  border-radius: 5px;
-  font-size: 20px;
-  display: inline-block;
-}
-
-.hero-with-cta a:hover {
-  background-color: #e49814;
-}
-
-.hero-with-cta .hero.block > div {
-    position: absolute;
-    transform: translate(50%, -50%);
-    top: 50%;
-    right: 50%;
-    width: 100%;
 }
