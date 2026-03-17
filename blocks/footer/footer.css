@@ -18,3 +18,63 @@ footer .footer p {
     padding: 40px 32px 24px;
   }
 }
+
+footer .footer > div {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(min(12rem, 100%), 1fr));
+    gap: 16px;
+}
+
+footer .footer > div .footer-last {
+    grid-column: 1 / -1;
+    text-align: center;
+    border-top: 2px solid white;
+    padding-top: 10px;
+}
+
+.footer {
+    background-image: url(https://themeloto.com/wps/gradi/wp-content/uploads/2024/11/gradi-slider.jpg);
+    background-position: center center;
+    background-size: cover;
+    padding: 0;
+    position: relative;
+    color: white;
+    z-index: 1;
+}
+
+.footer::before {
+  background-color: rgba(0,0,0,0.73);
+  transition: .3s;
+  display: block;
+  z-index: -1;
+  height: 100%;
+  content: "";
+  position: absolute;
+  width: 100%;
+}
+
+.footer .default-content-wrapper h2:after {
+    background-color: #ea1d22;
+    content: "";
+    display: block;
+    height: 3px;
+    width: 40%;
+}
+
+.footer ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    color: white;
+    font-weight: bold;
+}
+
+.footer ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+.footer ul li a:hover {
+  color: #e49814;
+    text-decoration: underline;
+}
