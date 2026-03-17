@@ -1,153 +1,286 @@
-import { fetchPlaceholders } from '../../scripts/placeholders.js';
+/* stylelint-disable no-descending-specificity */
 
-function updateActiveSlide(slide) {
-  const block = slide.closest('.carousel');
-  const slideIndex = parseInt(slide.dataset.slideIndex, 10);
-  block.dataset.activeSlide = slideIndex;
-
-  const slides = block.querySelectorAll('.carousel-slide');
-
-  slides.forEach((aSlide, idx) => {
-    aSlide.setAttribute('aria-hidden', idx !== slideIndex);
-    aSlide.querySelectorAll('a').forEach((link) => {
-      if (idx !== slideIndex) {
-        link.setAttribute('tabindex', '-1');
-      } else {
-        link.removeAttribute('tabindex');
-      }
-    });
-  });
-
-  const indicators = block.querySelectorAll('.carousel-slide-indicator');
-  indicators.forEach((indicator, idx) => {
-    const button = indicator.querySelector('button');
-    if (idx !== slideIndex) {
-      button.removeAttribute('disabled');
-      button.removeAttribute('aria-current');
-    } else {
-      button.setAttribute('disabled', true);
-      button.setAttribute('aria-current', true);
-    }
-  });
+/* === Carousel / Hero Slider === */
+.carousel-wrapper {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100%;
+  max-width: 100% !important;
 }
 
-function showSlide(block, slideIndex = 0) {
-  const slides = block.querySelectorAll('.carousel-slide');
-  let realSlideIndex = slideIndex < 0 ? slides.length - 1 : slideIndex;
-  if (slideIndex >= slides.length) realSlideIndex = 0;
-  const activeSlide = slides[realSlideIndex];
-
-  activeSlide.querySelectorAll('a').forEach((link) => link.removeAttribute('tabindex'));
-  block.querySelector('.carousel-slides').scrollTo({
-    top: 0,
-    left: activeSlide.offsetLeft,
-    behavior: 'smooth',
-  });
+.carousel-wrapper .carousel-container {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100%;
+  max-width: 100% !important;
 }
 
-function bindEvents(block) {
-  const slideIndicators = block.querySelector('.carousel-slide-indicators');
-  if (!slideIndicators) return;
-
-  slideIndicators.querySelectorAll('button').forEach((button) => {
-    button.addEventListener('click', (e) => {
-      const slideIndicator = e.currentTarget.parentElement;
-      showSlide(block, parseInt(slideIndicator.dataset.targetSlide, 10));
-    });
-  });
-
-  block.querySelector('.slide-prev').addEventListener('click', () => {
-    showSlide(block, parseInt(block.dataset.activeSlide, 10) - 1);
-  });
-  block.querySelector('.slide-next').addEventListener('click', () => {
-    showSlide(block, parseInt(block.dataset.activeSlide, 10) + 1);
-  });
-
-  const slideObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) updateActiveSlide(entry.target);
-    });
-  }, { threshold: 0.5 });
-  block.querySelectorAll('.carousel-slide').forEach((slide) => {
-    slideObserver.observe(slide);
-  });
+.carousel .carousel-slides-container {
+  position: relative;
 }
 
-function createSlide(row, slideIndex, carouselId) {
-  const slide = document.createElement('li');
-  slide.dataset.slideIndex = slideIndex;
-  slide.setAttribute('id', `carousel-${carouselId}-slide-${slideIndex}`);
-  slide.classList.add('carousel-slide');
+.carousel .carousel-slides,
+.carousel .carousel-slide-indicators {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
 
-  row.querySelectorAll(':scope > div').forEach((column, colIdx) => {
-    column.classList.add(`carousel-slide-${colIdx === 0 ? 'image' : 'content'}`);
-    slide.append(column);
-  });
+.carousel .carousel-slides {
+  display: flex;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  overflow: scroll clip;
+}
 
-  const labeledBy = slide.querySelector('h1, h2, h3, h4, h5, h6');
-  if (labeledBy) {
-    slide.setAttribute('aria-labelledby', labeledBy.getAttribute('id'));
+.carousel .carousel-slides::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel .carousel-slide {
+  flex: 0 0 100%;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  min-height: 100dvh;
+}
+
+/* dark overlay on slides */
+.carousel .carousel-slide::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgb(0 0 0 / 55%);
+  z-index: 1;
+}
+
+.carousel .carousel-slide:has(.carousel-slide-content[data-align='center']) {
+  align-items: center;
+}
+
+.carousel .carousel-slide:has(.carousel-slide-content[data-align='right']) {
+  align-items: flex-end;
+}
+
+/* background image */
+.carousel .carousel-slide .carousel-slide-image {
+  position: absolute;
+  inset: 0;
+}
+
+.carousel .carousel-slide .carousel-slide-image picture {
+  position: absolute;
+  inset: 0;
+}
+
+.carousel .carousel-slide .carousel-slide-image picture > img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+/* slide content (text overlay) */
+.carousel .carousel-slide .carousel-slide-content {
+  z-index: 2;
+  position: relative;
+  margin: 24px;
+  padding: 0;
+  color: #fff;
+  background-color: transparent;
+  width: auto;
+  max-width: 700px;
+}
+
+/* subtitle (first p before h1/h2) */
+.carousel .carousel-slide .carousel-slide-content p:first-child {
+  font-size: 18px;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+  opacity: 0.9;
+}
+
+/* main heading */
+.carousel .carousel-slide .carousel-slide-content h1,
+.carousel .carousel-slide .carousel-slide-content h2 {
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1.15;
+  color: #fff;
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+/* description text */
+.carousel .carousel-slide .carousel-slide-content p {
+  color: rgb(255 255 255 / 85%);
+  font-size: 16px;
+  line-height: 1.7;
+  margin-bottom: 24px;
+}
+
+/* CTA buttons row */
+.carousel .carousel-slide .carousel-slide-content p.button-wrapper {
+  display: inline-block;
+  margin-right: 12px;
+  margin-bottom: 0;
+}
+
+.carousel .carousel-slide .carousel-slide-content a.button {
+  background-color: var(--accent-color, #ea1d22);
+  border-color: var(--accent-color, #ea1d22);
+  color: #fff;
+  padding: 14px 32px;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.carousel .carousel-slide .carousel-slide-content a.button:hover {
+  background-color: var(--link-hover-color, #c5171b);
+  border-color: var(--link-hover-color, #c5171b);
+  text-decoration: none;
+}
+
+/* secondary button style */
+.carousel .carousel-slide .carousel-slide-content a.button.secondary {
+  background-color: transparent;
+  border-color: #fff;
+  color: #fff;
+}
+
+.carousel .carousel-slide .carousel-slide-content a.button.secondary:hover {
+  background-color: var(--accent-color, #ea1d22);
+  border-color: var(--accent-color, #ea1d22);
+}
+
+/* slide indicators (dots) — hidden */
+.carousel .carousel-slide-indicators {
+  display: none;
+}
+
+.carousel .carousel-slide-indicator button {
+  width: 12px;
+  height: 12px;
+  margin: 0;
+  padding: 0;
+  border-radius: 50%;
+  background-color: rgb(255 255 255 / 40%);
+  border: 2px solid rgb(255 255 255 / 60%);
+  transition: all 0.3s ease;
+}
+
+.carousel .carousel-slide-indicator button:disabled {
+  background-color: var(--accent-color, #ea1d22);
+  border-color: var(--accent-color, #ea1d22);
+}
+
+.carousel .carousel-slide-indicator button:hover,
+.carousel .carousel-slide-indicator button:focus-visible {
+  background-color: #fff;
+  border-color: #fff;
+}
+
+/* navigation arrows */
+.carousel .carousel-navigation-buttons {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 12px;
+  right: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 3;
+}
+
+.carousel .carousel-navigation-buttons button {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  margin: 0;
+  border-radius: 0;
+  padding: 0;
+  background-color: rgb(0 0 0 / 30%);
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+.carousel .carousel-navigation-buttons button:hover,
+.carousel .carousel-navigation-buttons button:focus-visible {
+  background-color: var(--accent-color, #ea1d22);
+}
+
+.carousel .carousel-navigation-buttons button::after {
+  display: block;
+  content: '';
+  border: 2px solid #fff;
+  border-bottom: 0;
+  border-left: 0;
+  height: 12px;
+  width: 12px;
+  position: absolute;
+  top: 50%;
+  left: calc(50% + 2px);
+  transform: translate(-50%, -50%) rotate(-135deg);
+}
+
+.carousel .carousel-navigation-buttons button.slide-next::after {
+  transform: translate(-50%, -50%) rotate(45deg);
+  left: calc(50% - 2px);
+}
+
+/* tablet and up */
+@media (width >= 600px) {
+  .carousel .carousel-slide .carousel-slide-content {
+    margin: 60px;
+    max-width: 650px;
   }
 
-  return slide;
-}
-
-let carouselId = 0;
-export default async function decorate(block) {
-  carouselId += 1;
-  block.setAttribute('id', `carousel-${carouselId}`);
-  const rows = block.querySelectorAll(':scope > div');
-  const isSingleSlide = rows.length < 2;
-
-  const placeholders = await fetchPlaceholders();
-
-  block.setAttribute('role', 'region');
-  block.setAttribute('aria-roledescription', placeholders.carousel || 'Carousel');
-
-  const container = document.createElement('div');
-  container.classList.add('carousel-slides-container');
-
-  const slidesWrapper = document.createElement('ul');
-  slidesWrapper.classList.add('carousel-slides');
-  block.prepend(slidesWrapper);
-
-  let slideIndicators;
-  if (!isSingleSlide) {
-    const slideIndicatorsNav = document.createElement('nav');
-    slideIndicatorsNav.setAttribute('aria-label', placeholders.carouselSlideControls || 'Carousel Slide Controls');
-    slideIndicators = document.createElement('ol');
-    slideIndicators.classList.add('carousel-slide-indicators');
-    slideIndicatorsNav.append(slideIndicators);
-    block.append(slideIndicatorsNav);
-
-    const slideNavButtons = document.createElement('div');
-    slideNavButtons.classList.add('carousel-navigation-buttons');
-    slideNavButtons.innerHTML = `
-      <button type="button" class= "slide-prev" aria-label="${placeholders.previousSlide || 'Previous Slide'}"></button>
-      <button type="button" class="slide-next" aria-label="${placeholders.nextSlide || 'Next Slide'}"></button>
-    `;
-
-    container.append(slideNavButtons);
+  .carousel .carousel-slide .carousel-slide-content h1,
+  .carousel .carousel-slide .carousel-slide-content h2 {
+    font-size: 52px;
   }
 
-  rows.forEach((row, idx) => {
-    const slide = createSlide(row, idx, carouselId);
-    slidesWrapper.append(slide);
+  .carousel .carousel-slide .carousel-slide-content p:first-child {
+    font-size: 20px;
+  }
 
-    if (slideIndicators) {
-      const indicator = document.createElement('li');
-      indicator.classList.add('carousel-slide-indicator');
-      indicator.dataset.targetSlide = idx;
-      indicator.innerHTML = `<button type="button" aria-label="${placeholders.showSlide || 'Show Slide'} ${idx + 1} ${placeholders.of || 'of'} ${rows.length}"></button>`;
-      slideIndicators.append(indicator);
-    }
-    row.remove();
-  });
+  .carousel .carousel-navigation-buttons {
+    left: 0;
+    right: 0;
+  }
 
-  container.append(slidesWrapper);
-  block.prepend(container);
+  .carousel .carousel-navigation-buttons button {
+    width: 56px;
+    height: 56px;
+  }
+}
 
-  if (!isSingleSlide) {
-    bindEvents(block);
+/* desktop */
+@media (width >= 900px) {
+  .carousel .carousel-slide .carousel-slide-content {
+    margin: 80px 120px;
+    max-width: 700px;
+  }
+
+  .carousel .carousel-slide .carousel-slide-content h1,
+  .carousel .carousel-slide .carousel-slide-content h2 {
+    font-size: 64px;
+  }
+
+  .carousel .carousel-slide .carousel-slide-content p:first-child {
+    font-size: 22px;
+  }
+
+  .carousel .carousel-slide .carousel-slide-content p {
+    font-size: 17px;
   }
 }
