@@ -354,3 +354,53 @@ main > .faq-section {
   line-height: 1.8;
   margin: 0;
 }
+
+
+
+.columns-three-cta-hover .columns div > div {
+  display: flex;
+    flex-direction: column;
+    position: relative;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 20px;
+    box-shadow: 0px 3px 20px 0px rgba(0, 0, 0, 0.2);
+}
+
+.columns-three-cta-hover .columns div > div::before {
+    background: #E49814;
+    content: "";
+    position: absolute;
+    transition: .5s;
+    z-index: -1;
+    height: 4px;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+.columns-three-cta-hover .columns div > div:hover {
+    transform: skew(5deg);
+}
+
+.columns-three-cta-hover .columns div > div:hover::before {
+    height: 100%;
+}
+
+.columns-three-cta-hover .columns div > div a {
+  background-color: #ea1d22;
+  color: white;
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+}
+.columns-three-cta-hover img {
+  height: 75px;
+  width: 75px;
+  object-fit: cover;
+}
+
+.columns-founders-details .default-content-wrapper,
+.columns-three-cta-hover .default-content-wrapper{
+  text-align: center;
+}
