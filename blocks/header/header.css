@@ -302,3 +302,137 @@ header nav .nav-tools {
 hr{
   display: none;
 }
+
+
+/* ----------------------------------------------------------
+   MAIN NAVBAR BASE STYLES
+---------------------------------------------------------- */
+
+.navbar {
+    background: transparent;
+    position: relative;
+    z-index: 10;
+    font-family: Arial, sans-serif;
+}
+
+.navbar ul {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar ul li {
+    position: relative;
+}
+
+.navbar ul li a {
+    color: #000;
+    padding: 12px 5px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 16px;
+    display: block;
+    transition: color 0.25s ease;
+}
+
+/* Highlight active or hovered menu item */
+.navbar ul li:hover > a,
+.navbar ul li a.active {
+    color: #ea1d22;  /* RED like your screenshot */
+}
+
+
+/* ----------------------------------------------------------
+   DROPDOWN MENU BASE
+---------------------------------------------------------- */
+
+.navbar ul li ul {
+    position: absolute;
+    left: 0;
+    top: 120%;
+    min-width: 200px;
+    background: #fff;
+    padding: 15px 0;
+    border-radius: 4px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(12px);
+    transition: all 0.25s ease;
+    z-index: 999;
+}
+
+/* Dropdown items */
+.navbar ul li ul li {
+    width: 100%;
+}
+
+.navbar ul li ul li a {
+    padding: 10px 20px;
+    color: #333;
+    font-weight: 500;
+    display: block;
+    transition: 0.25s ease;
+}
+
+/* Submenu hover style */
+.navbar ul li ul li a:hover {
+    color: #ea1d22;        /* RED hover */
+    background: #f9f9f9;   /* Light gray background */
+}
+
+
+/* ----------------------------------------------------------
+   SHOW DROPDOWN ON HOVER
+---------------------------------------------------------- */
+
+.navbar ul li:hover > ul {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+
+/* ----------------------------------------------------------
+   OPTIONAL: DROPDOWN ARROW (CHEVRON)
+---------------------------------------------------------- */
+
+.navbar ul li a.has-submenu::after {
+    content: "▾";            /* small arrow */
+    margin-left: 6px;
+    font-size: 12px;
+    transition: transform 0.25s ease;
+}
+
+/* Rotate arrow on hover */
+.navbar ul li:hover > a.has-submenu::after {
+    transform: rotate(180deg);
+}
+
+
+/* ----------------------------------------------------------
+   OPTIONAL: MOBILE SUPPORT
+---------------------------------------------------------- */
+
+@media (max-width: 900px) {
+    .navbar ul {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .navbar ul li {
+        width: 100%;
+    }
+
+    .navbar ul li ul {
+        position: static;
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+        box-shadow: none;
+        padding-left: 20px;
+    }
+}
