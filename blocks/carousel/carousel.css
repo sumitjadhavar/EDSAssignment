@@ -151,3 +151,107 @@
     --slide-content-width: auto;
   }
 }
+
+.carousel-images .carousel .carousel-slide {
+  flex-basis: 20%;
+  height: 70px;
+  margin: 0 20px;
+}
+
+.carousel-images .carousel-slide-indicators {
+  display: none;
+}
+
+.carousel-images .slide-prev,
+.carousel-images .slide-next,
+.carousel-feedback .slide-prev,
+.carousel-feedback .slide-next {
+  opacity: 0;
+  transition: opacity 0.2s;
+  color: white;
+}
+
+.carousel-images .carousel-slides-container:hover .slide-prev,
+.carousel-feedback .carousel-slides-container:hover .slide-prev,
+.carousel-feedback .carousel-slides-container:hover .slide-next,
+.carousel-images .carousel-slides-container:hover .slide-next {
+  opacity: 1;
+  background-color: #e49814;
+  cursor: pointer;
+}
+
+.carousel-images .slide-prev:hover,
+.carousel-images .slide-prev:focus-visible,
+.carousel-images .slide-next:hover,
+.carousel-images .slide-next:focus-visible {
+  background-color: #ea1d22;
+  cursor: pointer;
+}
+
+.carousel-images .carousel .carousel-slide .carousel-slide-image picture > img {
+  object-fit: none;
+}
+.carousel-images .carousel-slide-indicators,
+.carousel-no-bullets .carousel-slide-indicators,
+.carousel-feedback .carousel-slide-indicators,
+.carousel-images .carousel-slide-content {
+  display: none;
+}
+
+.carousel-no-bullets a {
+  background-color: #ea1d22;
+  cursor: pointer;
+  color: white;
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+}
+
+.carousel-no-bullets a:hover {
+  background-color: #e49814;
+}
+
+.carousel-no-bullets .carousel .carousel-navigation-buttons button.slide-next,
+.carousel-no-bullets .carousel .carousel-navigation-buttons button.slide-prev {
+  background-color: transparent;
+  border: none;
+  color: white;
+  border-radius: 0;
+}
+
+.carousel-no-bullets .carousel .carousel-navigation-buttons button.slide-next:hover,
+.carousel-no-bullets .carousel .carousel-navigation-buttons button.slide-next:focus-visible,
+.carousel-no-bullets .carousel .carousel-navigation-buttons button.slide-prev:hover,
+.carousel-no-bullets .carousel .carousel-navigation-buttons button.slide-prev:focus-visible {
+  background-color: white;
+  color: black;
+  border-radius: 5px;
+  padding: 20px 25px;
+}
+
+.carousel-feedback {
+    background-image: url(https://themeloto.com/wps/gradi/wp-content/uploads/2024/11/gradi-slider.jpg);
+    background-position: center center;
+    background-size: cover;
+    padding: 0;
+    position: relative;
+    z-index: 1;
+}
+
+.carousel-feedback::before {
+  background-color: rgba(0,0,0,0.73);
+  transition: .3s;
+  z-index: -1;
+  display: block;
+  height: 100%;
+  content: "";
+  position: absolute;
+  width: 100%;
+}
+
+.carousel-feedback .default-content-wrapper,
+.carousel-feedback .carousel-slides{
+  text-align: center;
+  color: white;
+  padding: 32px;
+}
