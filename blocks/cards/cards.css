@@ -993,3 +993,42 @@
   color: #fff;
   text-decoration: none;
 }
+
+// test //
+
+.cards-text-wrapper .cards > ul,
+.cards-details .cards > ul,
+.cards-gallery .cards > ul {
+  grid-template-columns: repeat(3, minmax(257px, 1fr));
+}
+
+.cards-details .cards .cards-card-image {
+    position: relative;
+}
+
+.cards-details .cards .cards-card-image::before {
+    content: "";
+    position: absolute;
+    background: rgba(0, 0, 0, 0.5);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: scale(0);
+    transition: transform 0.5s;
+}
+
+.cards-details .cards > ul > li:hover .cards-card-image::before {
+    transform: scale(1);
+}
+
+.cards-details .cards > ul > li {
+  box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+.cards-gallery .default-content-wrapper,
+.cards-text .default-content-wrapper,
+.cards-details .default-content-wrapper {
+  text-align: center;
+}
