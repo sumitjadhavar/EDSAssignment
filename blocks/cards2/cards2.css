@@ -97,7 +97,7 @@
 .cards-text-wrapper .cards > ul,
 .cards-details .cards > ul,
 .cards-gallery .cards > ul {
-  grid-template-columns: repeat(3, minmax(257px, 1fr));
+  grid-template-columns: repeat(3, 1fr));
 }
 
 .cards-text-wrapper .cards > ul > li {
